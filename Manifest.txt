@@ -1,0 +1,7 @@
+Manifest.txt
+README.txt
+lib/swingset.rb
+lib/swingset/swingset.rb
+bin/swingset
+History.txt
+
