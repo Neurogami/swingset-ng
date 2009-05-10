@@ -3,6 +3,26 @@ module Neurogami
 
     module Core
 
+      class Dimension
+        def self.[]( h, w )
+          java::awt::Dimension.new h, w
+        end
+      end
+
+      class ImageIcon
+        def self.load  image_path 
+          javax.swing.ImageIcon.new load_resource(image_path)
+        end
+      end
+
+
+      class GroupLayout
+        def self.get content_pane
+          org.jdesktop.layout.GroupLayout.new content_pane 
+        end
+      end
+
+
 
       # A button wrapper
       # See http://xxxxxxxx to understand Swing buttons
@@ -40,12 +60,28 @@ module Neurogami
       end
 
 
+      class Font < Java::java::awt.Font
+      end
+
+
       # A label  wrapper
       # See http://xxxxxxxx to understand Swing labels
       class Label < Java::javax::swing::JLabel
+        
+        @@default_font = Font.new("Lucida Grande", 0, 12)
+
+        def self.default_font=(default_font)
+          @@default_font = default_font
+        end
+
+        def self.default_font
+          @@default_font 
+        end
+
         def initialize(text=nil)
           super
           self.text = text.to_s
+          self.font = Label.default_font
           yield self if block_given?
         end
 
@@ -56,6 +92,37 @@ module Neurogami
         def prefered_dimensions(w,h)
           self.prefered_size = java::awt::Dimension.new(w, h)
         end
+      end
+
+
+      class TextField < Java::javax.swing.JTextField
+         
+        @@default_font = java::awt.Font.new("Lucida Grande", 0, 12)
+
+        def self.default_font=(default_font)
+          @@default_font = default_font
+        end
+
+        def self.default_font
+          @@default_font 
+        end
+
+        def initialize(text=nil)
+          super
+          self.text = text.to_s
+          self.font = Label.default_font
+
+          yield self if block_given?
+        end
+
+        def minimum_dimensions(w,h)
+          self.minimum_size = java::awt::Dimension.new(w, h)
+        end
+
+        def prefered_dimensions(w,h)
+          self.prefered_size = java::awt::Dimension.new(w, h)
+        end
+        
       end
 
 
@@ -100,4 +167,5 @@ module Neurogami
   end
 
 end
+
 
