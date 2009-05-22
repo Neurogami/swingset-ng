@@ -1,19 +1,26 @@
-swingset
-    by James Britt / Neurogami
-    http://www.neurogami.com
+Neurogami::SwingSet
+===================
 
-== DESCRIPTION:
+by James Britt / Neurogami
+
+http://www.neurogami.com
+
+
+DESCRIPTION:
+-------------------
 
 Wraps some basic Java Swing components in a nicer Ruby API.
 
 
-== FEATURES/PROBLEMS:
+FEATURES/PROBLEMS:
+-------------------
 
 Very few.  There is a file that defines assorted basic Swing components (Frame, Panel, TextField)
 using simple Ruby.  It makes it easier, and perhaps more 'Rubyish' to define Swing items.
 
 
-== SYNOPSIS:
+SYNOPSIS
+------------
 
 Install the gem.
 
@@ -82,19 +89,22 @@ You can then create a UI class like so:
       end
 
 
- == REQUIREMENTS:
+REQUIREMENTS
+-------------------
 
-This code came out of changes to the Monkeybars  library, such that one could define the View Swing
+This code came out of changes to the Monkeybars library, such that one could define the View Swing
 class using plain Ruby in place of a compiled Java class.
 
 Writing rawr Java/Swing code can get tedious, so these wrapper classes were created.
 
 
-== INSTALL:
+INSTALL
+-------------------
 
-sudo gem install swingset
+sudo gem install Neurogami-swingset
 
-== LICENSE:
+LICENSE
+--------------
 
 (The MIT License)
 
