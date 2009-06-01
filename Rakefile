@@ -21,9 +21,11 @@ task :default => 'spec:run'
 PROJ.name = 'swingset'
 PROJ.authors = 'James Britt'
 PROJ.email = 'james@neurogami.com'
-PROJ.url = 'FIXME (project homepage)'
+PROJ.url = 'http://github.com/Neurogami/swingset/tree/master'
 PROJ.version = Neurogami::SwingSet::VERSION
 #PROJ.rubyforge.name = 'swingset'
+PROJ.readme_file = 'README.md'
+PROJ.summary = "Nicer Ruby wrappers for some Swing components."
 
 PROJ.spec.opts << '--color'
 

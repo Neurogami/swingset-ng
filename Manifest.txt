@@ -1,5 +1,5 @@
 Manifest.txt
-README.txt
+README.md
 lib/swingset.rb
 lib/swingset/swingset.rb
 bin/swingset
