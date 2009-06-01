@@ -124,7 +124,19 @@ module Neurogami
         end
         
       end
+ 
+      # A LayeredPane wrapper
+      # See http://xxxx xxxx to understand Swing LayeredPanes 
+      class LayeredPane < javax::swing.JLayeredPane
 
+        def background_color(red, blue, green)
+          self.background = java::awt::Color.new(red.to_i, blue.to_i, green.to_i)
+        end
+
+        def size(height, width)
+          self.preferred_size =  java::awt::Dimension.new(width, height)
+        end
+      end
 
       # A panel  wrapper
       # See http://xxxxxxxx to understand Swing panels
