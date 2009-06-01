@@ -136,6 +136,11 @@ module Neurogami
         def size(height, width)
           self.preferred_size =  java::awt::Dimension.new(width, height)
         end
+
+
+        def add_ordered_components *components
+
+        end
       end
 
       # A panel  wrapper
