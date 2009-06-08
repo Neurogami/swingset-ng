@@ -59,16 +59,16 @@ module Neurogami
         end
       end
 
-
-      class Font < Java::java::awt.Font
-      end
+     # Broken on Vista, it seems.
+      #class Font < Java::java::awt.Font
+      #end
 
 
       # A label  wrapper
       # See http://xxxxxxxx to understand Swing labels
       class Label < Java::javax::swing::JLabel
         
-        @@default_font = Font.new("Lucida Grande", 0, 12)
+        @@default_font = java::awt.Font.new("Lucida Grande", 0, 12)
 
         def self.default_font=(default_font)
           @@default_font = default_font
