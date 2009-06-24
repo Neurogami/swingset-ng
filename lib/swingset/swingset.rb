@@ -4,14 +4,14 @@ module Neurogami
     module Core
 
       class Dimension
-        def self.[]( h, w )
-          java::awt::Dimension.new h, w
+        def self.[](width, height)
+          java::awt::Dimension.new width, height
         end
       end
 
       class ImageIcon
         def self.load  image_path 
-          javax.swing.ImageIcon.new load_resource(image_path)
+          javax.swing.ImageIcon.new load_resource image_path
         end
       end
 
@@ -21,8 +21,6 @@ module Neurogami
           org.jdesktop.layout.GroupLayout.new content_pane 
         end
       end
-
-
 
       # A button wrapper
       # See http://xxxxxxxx to understand Swing buttons
@@ -42,15 +40,12 @@ module Neurogami
 
       end
 
-
-
       class MenuItem  < Java::javax.swing.JMenuItem
         def initialize
           super
           yield self if block_given?
         end
       end
-
 
       class Menu  < Java::javax.swing.JMenu
         def initialize
@@ -59,7 +54,7 @@ module Neurogami
         end
       end
 
-     # Broken on Vista, it seems.
+      # Broken on some OS'es, it seems.
       #class Font < Java::java::awt.Font
       #end
 
@@ -67,10 +62,10 @@ module Neurogami
       # A label  wrapper
       # See http://xxxxxxxx to understand Swing labels
       class Label < Java::javax::swing::JLabel
-        
-        @@default_font = java::awt.Font.new("Lucida Grande", 0, 12)
 
-        def self.default_font=(default_font)
+        @@default_font = java::awt.Font.new "Lucida Grande", 0, 12
+
+        def self.default_font= default_font
           @@default_font = default_font
         end
 
@@ -78,28 +73,28 @@ module Neurogami
           @@default_font 
         end
 
-        def initialize(text=nil)
+        def initialize text=nil
           super
           self.text = text.to_s
           self.font = Label.default_font
           yield self if block_given?
         end
 
-        def minimum_dimensions(w,h)
-          self.minimum_size = java::awt::Dimension.new(w, h)
+        def minimum_dimensions width, height
+          self.minimum_size = java::awt::Dimension.new width, height
         end
 
-        def prefered_dimensions(w,h)
-          self.prefered_size = java::awt::Dimension.new(w, h)
+        def prefered_dimensions width, height
+          self.prefered_size = java::awt::Dimension.new width, height
         end
       end
 
 
       class TextField < Java::javax.swing.JTextField
-         
-        @@default_font = java::awt.Font.new("Lucida Grande", 0, 12)
 
-        def self.default_font=(default_font)
+        @@default_font = java::awt.Font.new "Lucida Grande", 0, 12
+
+        def self.default_font= default_font
           @@default_font = default_font
         end
 
@@ -107,7 +102,7 @@ module Neurogami
           @@default_font 
         end
 
-        def initialize(text=nil)
+        def initialize text = nil
           super
           self.text = text.to_s
           self.font = Label.default_font
@@ -115,26 +110,26 @@ module Neurogami
           yield self if block_given?
         end
 
-        def minimum_dimensions(w,h)
-          self.minimum_size = java::awt::Dimension.new(w, h)
+        def minimum_dimensions width, height
+          self.minimum_size = java::awt::Dimension.new width, height
         end
 
-        def prefered_dimensions(w,h)
-          self.prefered_size = java::awt::Dimension.new(w, h)
+        def prefered_dimensions width, height
+          self.prefered_size = java::awt::Dimension.new width, height
         end
-        
+
       end
- 
+
       # A LayeredPane wrapper
       # See http://xxxx xxxx to understand Swing LayeredPanes 
       class LayeredPane < javax::swing.JLayeredPane
 
-        def background_color(red, blue, green)
-          self.background = java::awt::Color.new(red.to_i, blue.to_i, green.to_i)
+        def background_color red, blue, green
+          self.background = java::awt::Color.new red.to_i, blue.to_i, green.to_i
         end
 
-        def size(height, width)
-          self.preferred_size =  java::awt::Dimension.new(width, height)
+        def size width, height
+          self.preferred_size =  java::awt::Dimension.new width, height
         end
 
 
@@ -147,12 +142,12 @@ module Neurogami
       # See http://xxxxxxxx to understand Swing panels
       class Panel < javax::swing.JPanel
 
-        def background_color(red, blue, green)
-          self.background = java::awt::Color.new(red.to_i, blue.to_i, green.to_i)
+        def background_color red, blue, green
+          self.background = java::awt::Color.new red.to_i, blue.to_i, green.to_i
         end
 
-        def size(height, width)
-          self.preferred_size =  java::awt::Dimension.new(width, height)
+        def size width, height
+          self.preferred_size =  java::awt::Dimension.new  width, height
         end
       end
 
@@ -162,27 +157,22 @@ module Neurogami
       class Frame  < Java::javax::swing::JFrame
         attr_accessor :minimum_height, :minimum_width
 
-        def initialize(*args)
+        def initialize *args
           super
         end
 
-        def define_minimum_size(height, width)
-          self.minimum_size = java::awt::Dimension.new(height, width)
+        def define_minimum_size width, height
+          self.minimum_size = java::awt::Dimension.new width, height 
         end
 
-        def minimum_height=(h)
-          @minimum_height = h.to_i
-          define_minimum_size @minimum_width.to_i, @minimum_height
+        def minimum_height= height
+          define_minimum_size  @minimum_width.to_i, @minimum_height = height.to_i
         end
 
-        def minimum_width=(w)
-          @minimum_width = w.to_i
-          define_minimum_size @minimum_width, @minimum_height.to_i
+        def minimum_width= width
+          define_minimum_size  @minimum_width = width.to_i, @minimum_height.to_i
         end
       end
     end
   end
-
 end
-
-
