@@ -2,6 +2,30 @@ module Neurogami
   module SwingSet
 
     module Core
+      module SwingConstants
+       %w{
+        BOTTOM
+        CENTER
+        EAST
+        HORIZONTAL
+        LEADING
+        LEFT
+        NEXT
+        NORTH
+        NORTH_EAST
+        NORTH_WEST
+        PREVIOUS
+        RIGHT
+        SOUTH
+        SOUTH_EAST
+        SOUTH_WEST
+        TOP
+        TRAILING
+        VERTICAL
+        WEST}.each do  |konst|
+         class_eval "#{konst} = Java::javax::swing::SwingConstants::#{konst}"
+        end
+      end
 
       class Dimension
         def self.[](width, height)
@@ -134,6 +158,14 @@ module Neurogami
 
 
         def add_ordered_components *components
+          components.each do |c|
+            self.add c
+          end
+
+          components.each do |c|
+            self.moveToFront c
+          end
+
 
         end
       end
