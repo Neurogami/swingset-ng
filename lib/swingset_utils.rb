@@ -51,6 +51,7 @@ module Neurogami
         warn "It seems that the swingset files already exist. Remove or rename them, and try again."
         exit
       end
+    FileUtils.mkdir_p path unless File.exists? path
     FileUtils.cp_r "#{here}/swingset", path, :verbose =>  true
     FileUtils.cp_r "#{here}/swingset.rb", path, :verbose =>  true
     FileUtils.cp_r "#{here}/swingset_utils.rb", path, :verbose =>  true

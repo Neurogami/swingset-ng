@@ -78,10 +78,8 @@ module Neurogami
         end
       end
 
-      # Broken on some OS'es, it seems.
-      #class Font < Java::java::awt.Font
-      #end
-
+      class Font < Java::java.awt.Font
+      end
 
       # A label  wrapper
       # See http://xxxxxxxx to understand Swing labels

@@ -2,6 +2,8 @@
 # configured in this Rakefile. The .rake files in the tasks directory
 # are where the options are used.
 
+gem 'bones', '< 3.0.0'
+
 begin
   require 'bones'
   Bones.setup
