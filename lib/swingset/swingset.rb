@@ -78,10 +78,11 @@ module Neurogami
         end
       end
 
-      # Broken on some OS'es, it seems.
-      #class Font < Java::java::awt.Font
-      #end
-
+      Font = Java::java.awt.Font
+      # Inheriting from Java::java.awt.Font doesn't work yet in Java 1.5
+      # See: http://jira.codehaus.org/browse/JRUBY-4451
+      # class Font < Java::java.awt.Font
+      # end
 
       # A label  wrapper
       # See http://xxxxxxxx to understand Swing labels
