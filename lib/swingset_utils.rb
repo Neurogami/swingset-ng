@@ -2,7 +2,7 @@ module Neurogami
   module SwingSet
 
     # :stopdoc:
-    VERSION = '0.2.1'
+    VERSION = '0.2.2'
     LIBPATH = ::File.expand_path(::File.dirname(__FILE__)) + ::File::SEPARATOR
     PATH = ::File.dirname(LIBPATH) + ::File::SEPARATOR
     # :startdoc:
@@ -53,6 +53,7 @@ module Neurogami
       end
     FileUtils.cp_r "#{here}/swingset", path, :verbose =>  true
     FileUtils.cp_r "#{here}/swingset.rb", path, :verbose =>  true
+    FileUtils.cp_r "#{here}/swingset_utils.rb", path, :verbose =>  true
     end
 
   end  # module Swingset
