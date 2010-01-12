@@ -1,4 +1,6 @@
-== 1.0.0 / 2009-05-08
+== 0.2.2 / 2010-01-11
 
-* 1 major enhancement
-  * Birthday!
+* Merged in changes from stepheneb to restore the use of Font inheritance from Swing
+* Changed the Rakefile to use Mr. Bones 3.2.0, but also kept a copy of the previous Rakefile for people who do not want to update their bones install
+
+
