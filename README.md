@@ -22,16 +22,20 @@ using simple Ruby.  It makes it easier, and perhaps more 'Rubyish' to define Swi
 SYNOPSIS
 ------------
 
-Install the gem.
+Install the gem. 
+
+Neurogami gems are hosted on gems.neurogami.com
+
+See http://www.neurogami.com/gems/
 
 In the root of your project, run 
 
      swingset
   
 
-This will copy over the swingset.rb files under lib/ruby
+This will copy over the swingset.rb and related files into the lib/ruby path of your project.
 
-At the moment there are not options for other paths. 
+At the moment there are no options for other paths. 
 
 You can then create a UI class like so:
 
@@ -95,20 +99,26 @@ REQUIREMENTS
 This code came out of changes to the Monkeybars library, such that one could define the View Swing
 class using plain Ruby in place of a compiled Java class.
 
-Writing rawr Java/Swing code can get tedious, so these wrapper classes were created.
+Writing raw Java/Swing code can get tedious, so these wrapper classes were created. Nobody likes tedium, except maybe Philip Glass.
 
 
 INSTALL
 -------------------
 
-sudo gem install Neurogami-swingset
+    sudo gem sources -a http://gems.neurogami.com
+    sudo gem install swingset
+
+or
+
+    sudo gem i swingset ––source http://gems.neurogami.com
+
 
 LICENSE
 --------------
 
 (The MIT License)
 
-Copyright (c) 2009 James Britt
+Copyright (c) 2010 James Britt
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -128,3 +138,8 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+---
+
+Feed yor head.

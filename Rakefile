@@ -2,33 +2,26 @@
 # configured in this Rakefile. The .rake files in the tasks directory
 # are where the options are used.
 
-gem 'bones', '< 3.0.0'
+gem 'bones', '>= 3.2.0'
 
 begin
   require 'bones'
-  Bones.setup
 rescue LoadError
-  begin
-    load 'tasks/setup.rb'
-  rescue LoadError
-    raise RuntimeError, '### please install the "bones" gem ###'
-  end
+  abort '### Please install the "bones" gem ###'
 end
+
 
 ensure_in_path 'lib'
 require 'swingset'
 
-task :default => 'spec:run'
+# task :default => 'spec:run'
+Bones {
+  name        'swingset'
+  authors     'James Britt'
+  email       'james@neurogami.com'
+  url         'http://github.com/Neurogami/swingset/tree/master'
+  version     Neurogami::SwingSet::VERSION
+  readme_file 'README.md'
+  summary     'Nicer Ruby wrappers for some Swing components.'
 
-PROJ.name = 'swingset'
-PROJ.authors = 'James Britt'
-PROJ.email = 'james@neurogami.com'
-PROJ.url = 'http://github.com/Neurogami/swingset/tree/master'
-PROJ.version = Neurogami::SwingSet::VERSION
-#PROJ.rubyforge.name = 'swingset'
-PROJ.readme_file = 'README.md'
-PROJ.summary = "Nicer Ruby wrappers for some Swing components."
-
-PROJ.spec.opts << '--color'
-
-# EOF
+}
