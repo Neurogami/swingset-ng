@@ -18,6 +18,11 @@ FEATURES/PROBLEMS:
 Very few.  There is a file that defines assorted basic Swing components (Frame, Panel, TextField)
 using simple Ruby.  It makes it easier, and perhaps more 'Rubyish' to define Swing items.
 
+Note that the code has references to some JRuby stuff you need to call rake using jruby:
+
+    jruby -S rake gem
+
+
 
 SYNOPSIS
 ------------
