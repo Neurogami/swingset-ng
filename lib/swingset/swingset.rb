@@ -1,5 +1,23 @@
 module Neurogami
   module SwingSet
+    module MiG
+      module ClassMethods
+
+        def mig_layout
+          # Consider if this method should take an optional version string and 
+          # do something (fail? fallback?) if the given version does not match the
+          # version this methods wants to load.  At the least your code could then
+          # fail early if SwingSet upgrades to an imcompatible MiG version.
+          # Would need a real use case for this though.
+          require 'miglayout-3.7.2-swing'
+        end
+      end
+
+      def self.included(base)
+        base.extend(MiG::ClassMethods)
+      end
+
+    end
 
     module Core
       module SwingConstants
