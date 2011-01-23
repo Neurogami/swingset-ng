@@ -1,7 +1,19 @@
 module Neurogami
   module SwingSet
+
     module MiG
+
+
+      #  Java::net::miginfocom::swing::MigLayout
+
+
       module ClassMethods
+        HERE = File.expand_path(File.dirname __FILE__ )
+
+        def mig_jar glob_path = "#{HERE}/../../java/*.jar"
+          Dir.glob(glob_path).select { |f| 
+          f =~ /(miglayout-)(.+).jar$/}.first
+        end
 
         def mig_layout
           # Consider if this method should take an optional version string and 
@@ -9,13 +21,20 @@ module Neurogami
           # version this methods wants to load.  At the least your code could then
           # fail early if SwingSet upgrades to an imcompatible MiG version.
           # Would need a real use case for this though.
-          require 'miglayout-3.7.2-swing'
+          require mig_jar  
         end
+
       end
 
       def self.included(base)
         base.extend(MiG::ClassMethods)
       end
+
+     # 
+      def mig_layout layout_spec
+       Java::net::miginfocom::swing::MigLayout.new layout_spec
+      end
+
 
     end
 
@@ -151,11 +170,12 @@ module Neurogami
         end
 
         def minimum_dimensions width, height
-          self.minimum_size = java::awt::Dimension.new width, height
+          self.minimum_size = java::awt::Dimension.new( width, height)
         end
 
         def prefered_dimensions width, height
-          self.prefered_size = java::awt::Dimension.new width, height
+          self.preferred_size =  java::awt::Dimension.new( width, height)
+          self.setPreferredSize  java::awt::Dimension.new( width, height)
         end
 
       end
@@ -224,3 +244,5 @@ module Neurogami
     end
   end
 end
+
+

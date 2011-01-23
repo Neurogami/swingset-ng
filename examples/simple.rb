@@ -5,19 +5,19 @@ require 'swingset'
 
 include  Neurogami::SwingSet::Core
 
-class BasicFrame < Frame   
+class SimpleFrame < Frame   
   include  Neurogami::SwingSet::MiG
 
   mig_layout
 
-  FRAME_WIDTH  = 600
-  FRAME_HEIGHT = 130
+  FRAME_WIDTH  = 300
+  FRAME_HEIGHT = 200
 
-  LABEL_WIDTH  = 400
+  LABEL_WIDTH  = 140
   LABEL_HEIGHT = 60
 
   # Make sure our components are available! 
-  attr_accessor :default_button, :default_label
+  attr_accessor :default_button, :default_label, :other_button
 
   def initialize *args
     super
@@ -49,18 +49,18 @@ class BasicFrame < Frame
       b.text = "Close"
     end
 
-
-
-
+    @other_button = Button.new do |b|
+      b.text = "Quit"
+    end
 
     # Add components to panel
     component_panel.add @default_label, "gap unrelated"
     component_panel.add @default_button, "gap unrelated"
-
+    component_panel.add @other_button, "gap unrelated"
     add component_panel
 
     @default_button.addActionListener lambda{ |e| default_button_clicked e}
-  
+    @other_button.addActionListener lambda{ |e| default_button_clicked e}
   end
 
   def default_button_clicked event
@@ -71,7 +71,6 @@ class BasicFrame < Frame
 end
 
 
-af = BasicFrame.new
-af.set_location  500, 300
-af.show
-
+sf = SimpleFrame.new
+sf.set_location  500, 300
+sf.show 

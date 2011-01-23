@@ -25,3 +25,6 @@ Bones {
   summary     'Nicer Ruby wrappers for some Swing components.'
 
 }
+
+
+task :default => :notes
