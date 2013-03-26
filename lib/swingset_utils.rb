@@ -1,8 +1,13 @@
 module Neurogami
   module SwingSet
 
+    IN_FILE_SYSTEM = :in_file_system
+    IN_JAR_FILE = :in_jar_file
+
+    LOCAL_NAME = 'swingset-local'
+
     # :stopdoc:
-    VERSION = '0.3.0'
+    VERSION = '0.4.0'
     LIBPATH = ::File.expand_path(::File.dirname(__FILE__)) + ::File::SEPARATOR
     PATH = ::File.dirname(LIBPATH) + ::File::SEPARATOR
     # :startdoc:
@@ -29,15 +34,29 @@ module Neurogami
       args.empty? ? PATH : ::File.join(PATH, args.flatten)
     end
 
+
+    # Returns a const value indicating if the currently executing code is being run from the file system or from within a jar file.
+    def self.run_location
+      if File.expand_path(__FILE__) =~ /\.jar\!/
+        IN_JAR_FILE
+      else
+        IN_FILE_SYSTEM
+      end
+    end
+
     # Utility method used to rquire all files ending in .rb that lie in the
     # directory below this file that has the same name as the filename passed
     # in. Optionally, a specific _directory_ name can be passed in such that
     # the _filename_ does not have to be equivalent to the directory.
     #
     def self.require_all_libs_relative_to fname, dir = nil 
-      dir ||= ::File.basename(fname, '.*')
-      search_me = ::File.expand_path( ::File.join(::File.dirname(fname), dir, '**', '*.rb'))
-      Dir.glob(search_me).sort.each {|rb| require rb}
+      if run_location == IN_FILE_SYSTEM
+        dir ||= ::File.basename(fname, '.*')
+        search_me = ::File.expand_path( ::File.join(::File.dirname(fname), dir, '**', '*.rb'))
+        Dir.glob(search_me).sort.each {|rb| require rb}
+      else
+        require "swingset/#{LOCAL_NAME}"
+      end
     end
 
 
@@ -60,7 +79,7 @@ module Neurogami
       end
 
       FileUtils.mkdir_p path unless File.exists? path
-      warn "Have mig jar at #{mig_jar}"
+      warn "************ Have mig jar at #{mig_jar} ************ "
       FileUtils.cp_r mig_jar, path, :verbose =>  true
     end
 
@@ -71,18 +90,18 @@ module Neurogami
 
     def self.copy_over_ruby path = 'lib/ruby'
       require 'fileutils'
-      
+
       here = File.dirname(File.expand_path(__FILE__))
 
       if File.exist?("#{path}/swingset.rb") || File.exist?("#{path}/swingset")
         warn "It seems that the swingset files already exist. Remove or rename them, and try again."
         exit
       end
-      
+
       FileUtils.mkdir_p path unless File.exists? path
-      FileUtils.cp_r "#{here}/swingset", path, :verbose =>  true
-      FileUtils.cp_r "#{here}/swingset.rb", path, :verbose =>  true
-      FileUtils.cp_r "#{here}/swingset_utils.rb", path, :verbose =>  true
+      FileUtils.cp_r "#{here}/swingset",          path + "/#{LOCAL_NAME}",     :verbose =>  true
+      FileUtils.cp_r "#{here}/swingset.rb",       path + "/#{LOCAL_NAME}.rb",  :verbose =>  true
+      FileUtils.cp_r "#{here}/swingset_utils.rb", path,                        :verbose =>  true
     end
 
   end  # module Swingset

@@ -39,11 +39,11 @@ class BasicFrame < Frame
     #     http://www.miglayout.com/
     component_panel.layout = mig_layout "wrap 2"
 
-    @default_label = Label.new do |l|
-      l.font = Font.new "Lucida Grande", 0, 18
-      l.minimum_dimensions LABEL_WIDTH, LABEL_HEIGHT
-      l.text = "Neurogami::SwingSet rulez!"
-    end
+    @default_label = Label.new 
+      @default_label.font = Font.new "Lucida Grande", 0, 18
+      @default_label.minimum_dimensions LABEL_WIDTH, LABEL_HEIGHT
+      @default_label.text = "Neurogami::SwingSet rulez!"
+    
 
     @default_button = Button.new do |b|
       b.text = "Close"

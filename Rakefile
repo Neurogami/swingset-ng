@@ -23,7 +23,7 @@ Bones {
   version     Neurogami::SwingSet::VERSION
   readme_file 'README.md'
   summary     'Nicer Ruby wrappers for some Swing components.'
-
+  exclude     %w{Rakefile.bones.less-than-3.0.0 .__ .git .rvmrc tasks/neurogami.rake}
 }
 
 

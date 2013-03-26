@@ -4,10 +4,16 @@ module Neurogami
       module ClassMethods
         HERE = File.expand_path(File.dirname __FILE__ )
 
+        def in_jar?
+          $:.each do |_|
+            return true if _ =~ /\.jar\!/
+          end
+          false
+        end
+
         def mig_jar glob_path = "#{HERE}/../../java/*.jar"
-          warn "mig_jar #{glob_path} "
-          Dir.glob(glob_path).select { |f| 
-          f =~ /(miglayout-)(.+).jar$/}.first
+          glob_path  = "../lib/java/*.jar" if in_jar?
+          Dir.glob(glob_path).select { |f| f =~ /(miglayout-)(.+).jar$/}.first
         end
 
         def mig_layout
@@ -21,7 +27,7 @@ module Neurogami
       end
 
       def mig_layout layout_spec
-       Java::net::miginfocom::swing::MigLayout.new layout_spec
+        Java::net::miginfocom::swing::MigLayout.new layout_spec
       end
 
     end
@@ -120,12 +126,13 @@ module Neurogami
           @@default_font 
         end
 
-        def initialize text=nil
-          super
-          self.text = text.to_s
-          self.font = Label.default_font
-          yield self if block_given?
-        end
+        # This cause some stupid Java cast error nonsense
+        #def initialize text=nil
+        #  super
+        #  self.text = text.to_s
+        #  self.font = Label.default_font
+        #  yield self if block_given?
+        #end
 
         def minimum_dimensions width, height
           self.minimum_size = java::awt::Dimension.new width, height
