@@ -1,19 +1,31 @@
+## The current date is: Tue 03/26/2013  : 17:52:01.19
 module Neurogami
   module SwingSet
     module MiG
       module ClassMethods
+
         HERE = File.expand_path(File.dirname __FILE__ )
 
         def in_jar?
-          $:.each do |_|
-            return true if _ =~ /\.jar\!/
-          end
-          false
+          HERE =~ /^jar:/
         end
 
-        def mig_jar glob_path = "#{HERE}/../../java/*.jar"
-          glob_path  = "../lib/java/*.jar" if in_jar?
-          Dir.glob(glob_path).select { |f| f =~ /(miglayout-)(.+).jar$/}.first
+        def jar_dir
+          raise "Do not call 'jsr_dir' if you are not in a jar!" unless in_jar?
+          java_import 'org.monkeybars.rawr.Path'
+          File.dirname(org.monkeybars.rawr::Path.new.get_jar_path)
+        end
+
+        def mig_jar glob_path = File.expand_path("#{HERE}/../../java/*.jar")
+          # See  http://stackoverflow.com/questions/9730660/get-jruby-jar-path 
+          if in_jar?
+            java_import 'org.monkeybars.rawr.Path'
+            glob_path  = "#{jar_dir}/lib/java/*" 
+          end
+
+          _  = Dir.glob(glob_path).select { |f| f =~ /(miglayout-)(.+).jar$/}.first
+          raise "Failed to locate MiG jar!" unless _
+          _
         end
 
         def mig_layout
@@ -70,15 +82,12 @@ module Neurogami
         end
       end
 
-
       class GroupLayout
         def self.get content_pane
           org.jdesktop.layout.GroupLayout.new content_pane 
         end
       end
 
-      # A button wrapper
-      # See http://xxxxxxxx to understand Swing buttons
       class Button < Java::javax::swing::JButton
         def initialize
           super
@@ -86,13 +95,11 @@ module Neurogami
         end
       end
 
-
       class MenuBar < Java::javax.swing.JMenuBar
         def initialize
           super
           yield self if block_given?
         end
-
       end
 
       class MenuItem  < Java::javax.swing.JMenuItem
@@ -165,20 +172,17 @@ module Neurogami
         end
 
         def minimum_dimensions width, height
-          self.minimum_size = java::awt::Dimension.new( width, height)
+          self.minimum_size = java::awt::Dimension.new width, height
         end
 
         def prefered_dimensions width, height
-          self.preferred_size =  java::awt::Dimension.new( width, height)
-          self.setPreferredSize  java::awt::Dimension.new( width, height)
+          self.preferred_size =  java::awt::Dimension.new width, height
+          self.setPreferredSize  java::awt::Dimension.new width, height
         end
 
       end
 
-      # A LayeredPane wrapper
-      # See http://xxxx xxxx to understand Swing LayeredPanes 
       class LayeredPane < javax::swing.JLayeredPane
-
         def background_color red, blue, green
           self.background = java::awt::Color.new red.to_i, blue.to_i, green.to_i
         end
@@ -186,7 +190,6 @@ module Neurogami
         def size width, height
           self.preferred_size =  java::awt::Dimension.new width, height
         end
-
 
         def add_ordered_components *components
           components.each do |c|
@@ -196,15 +199,10 @@ module Neurogami
           components.each do |c|
             self.moveToFront c
           end
-
-
         end
       end
 
-      # A panel  wrapper
-      # See http://xxxxxxxx to understand Swing panels
       class Panel < javax::swing.JPanel
-
         def background_color red, blue, green
           self.background = java::awt::Color.new red.to_i, blue.to_i, green.to_i
         end
@@ -214,9 +212,6 @@ module Neurogami
         end
       end
 
-
-      # A frame  wrapper
-      # See http://xxxxxxxx to understand Swing frames
       class Frame  < Java::javax::swing::JFrame
         attr_accessor :minimum_height, :minimum_width
 
@@ -239,5 +234,4 @@ module Neurogami
     end
   end
 end
-
 
