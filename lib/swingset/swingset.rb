@@ -7,8 +7,10 @@ module Neurogami
         HERE = File.expand_path(File.dirname __FILE__ )
 
         def in_jar?
-          HERE =~ /^jar:/
+          warn ". . . . SwingSet#in_jar? has HERE = '#{HERE}' . . . . "
+          HERE =~ /(^jar:)|(^file)/ 
         end
+
 
         def jar_dir
           raise "Do not call 'jsr_dir' if you are not in a jar!" unless in_jar?
@@ -21,6 +23,11 @@ module Neurogami
           if in_jar?
             java_import 'org.monkeybars.rawr.Path'
             glob_path  = "#{jar_dir}/lib/java/*" 
+          end
+
+          if glob_path =~ /jar!/
+            warn ". . . . SwingSet#mig_jar is adjusting path '#{glob_path}' . . . . "
+            glob_path = glob_path.split( 'jar!/').last
           end
 
           _  = Dir.glob(glob_path).select { |f| f =~ /(miglayout-)(.+).jar$/}.first
