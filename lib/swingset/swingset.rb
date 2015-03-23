@@ -7,7 +7,6 @@ module Neurogami
         HERE = File.expand_path(File.dirname __FILE__ )
 
         def in_jar?
-          warn ". . . . SwingSet#in_jar? has HERE = '#{HERE}' . . . . "
           HERE =~ /(^jar:)|(^file)/ 
         end
 
@@ -18,6 +17,13 @@ module Neurogami
           File.dirname(org.monkeybars.rawr::Path.new.get_jar_path)
         end
 
+        def other_possible_mig_base_path
+          _ = HERE.split( 'jar!/').first
+          _ = _.split '/'
+          _.pop # Seriously? no trailing '!' for this?
+          _.join '/'
+        end
+
         def mig_jar glob_path = File.expand_path("#{HERE}/../../java/*.jar")
           # See  http://stackoverflow.com/questions/9730660/get-jruby-jar-path 
           if in_jar?
@@ -26,11 +32,17 @@ module Neurogami
           end
 
           if glob_path =~ /jar!/
-            warn ". . . . SwingSet#mig_jar is adjusting path '#{glob_path}' . . . . "
             glob_path = glob_path.split( 'jar!/').last
           end
 
           _  = Dir.glob(glob_path).select { |f| f =~ /(miglayout-)(.+).jar$/}.first
+
+
+          unless _
+            glob_path = other_possible_mig_base_path + '/' + glob_path
+            _  = Dir.glob(glob_path).select { |f| f =~ /(miglayout-)(.+).jar$/}.first
+          end
+
           raise "Failed to locate MiG jar!" unless _
           _
         end
@@ -41,8 +53,8 @@ module Neurogami
 
       end
 
-      def self.included(base)
-        base.extend(MiG::ClassMethods)
+      def self.included base
+        base.extend MiG::ClassMethods
       end
 
       def mig_layout layout_spec
